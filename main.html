@@ -1,16 +1,122 @@
 <!DOCTYPE html>
-
-<html>
-
+<html lang="en">
 <head>
-	<link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <title>OTP Entry Frontend</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      background: #f5f5f9;
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 0;
+      padding-top: 70px;
+    }
+    #verification_heading {
+      font-size: 2rem;
+      font-weight: bold;
+      margin-bottom: 12px;
+      letter-spacing: 1px;
+      color: #333;
+    }
+    #verification_subtext {
+      color: #666;
+      font-size: 1.1rem;
+      margin-bottom: 36px;
+    }
+    .code-container {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      margin-bottom: 30px;
+    }
+    .code {
+      font-size: 2rem;
+      width: 46px;
+      height: 54px;
+      text-align: center;
+      border-radius: 8px;
+      border: 2px solid #d6d6ef;
+      background: #fff;
+      outline: none;
+      transition: border 0.2s;
+    }
+    .code:focus {
+      border: 2px solid #0841a0;
+      box-shadow: 0 2px 10px rgba(8,65,160,0.10);
+    }
+  </style>
 </head>
-
 <body>
-	<!-- the entire body must be written by student -->
-    <script type="text/javascript" src="./script.js">
-</script>
+  <h1 id="verification_heading">Verify Your Account</h1>
+  <p id="verification_subtext">
+    Please enter the 6-digit code sent to your registered phone number.
+  </p>
+  <div class="code-container">
+    <input class="code" type="text" maxlength="1" inputmode="numeric" autocomplete="one-time-code" />
+    <input class="code" type="text" maxlength="1" inputmode="numeric" autocomplete="one-time-code" />
+    <input class="code" type="text" maxlength="1" inputmode="numeric" autocomplete="one-time-code" />
+    <input class="code" type="text" maxlength="1" inputmode="numeric" autocomplete="one-time-code" />
+    <input class="code" type="text" maxlength="1" inputmode="numeric" autocomplete="one-time-code" />
+    <input class="code" type="text" maxlength="1" inputmode="numeric" autocomplete="one-time-code" />
+  </div>
+  <script>
+    const inputs = document.querySelectorAll('.code');
+    inputs[0].focus();
 
+    inputs.forEach((input, idx) => {
+      input.addEventListener('keydown', (e) => {
+        if (e.key === 'Backspace') {
+          if (input.value !== '') {
+            input.value = '';
+            // Stay on this input
+          } else if (idx > 0) {
+            inputs[idx-1].focus();
+            inputs[idx-1].value = '';
+            e.preventDefault();
+          }
+        } else if (e.key.match(/^[0-9]$/)) {
+          input.value = ''; // So only the last digit remains
+          // Let user type
+        } else if (
+          e.key !== 'Tab'
+          && e.key !== 'Shift' 
+          && e.key !== 'ArrowLeft' 
+          && e.key !== 'ArrowRight'
+        ) {
+          // Block other non-numeric input
+          e.preventDefault();
+        }
+      });
+
+      input.addEventListener('input', (e) => {
+        const value = input.value;
+        if (value.length > 0 && value.match(/^[0-9]$/)) {
+          if (idx < inputs.length - 1) {
+            inputs[idx + 1].focus();
+          }
+        }
+      });
+
+      input.addEventListener('paste', function(e) {
+        // Allow pasting a 6-digit code
+        const paste = (e.clipboardData || window.clipboardData).getData('text');
+        const digits = paste.replace(/[^0-9]/g, '').split('');
+        if (digits.length > 0) {
+          e.preventDefault();
+          for (let i = 0; i < inputs.length; i++) {
+            inputs[i].value = digits[i] || "";
+          }
+          if (digits.length < inputs.length) {
+            inputs[digits.length].focus();
+          } else {
+            inputs[inputs.length - 1].focus();
+          }
+        }
+      });
+    });
+  </script>
 </body>
-
 </html>
