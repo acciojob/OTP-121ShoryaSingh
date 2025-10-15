@@ -55,13 +55,14 @@
     Please enter the 6-digit code sent to your registered phone number.
   </p>
   <div class="code-container">
-    <input class="code" type="text" maxlength="1" inputmode="numeric" autocomplete="one-time-code" />
-    <input class="code" type="text" maxlength="1" inputmode="numeric" autocomplete="one-time-code" />
-    <input class="code" type="text" maxlength="1" inputmode="numeric" autocomplete="one-time-code" />
-    <input class="code" type="text" maxlength="1" inputmode="numeric" autocomplete="one-time-code" />
-    <input class="code" type="text" maxlength="1" inputmode="numeric" autocomplete="one-time-code" />
-    <input class="code" type="text" maxlength="1" inputmode="numeric" autocomplete="one-time-code" />
-  </div>
+  <input class="code" id="code-1" type="text" maxlength="1" inputmode="numeric" autocomplete="one-time-code" />
+  <input class="code" id="code-2" type="text" maxlength="1" inputmode="numeric" autocomplete="one-time-code" />
+  <input class="code" id="code-3" type="text" maxlength="1" inputmode="numeric" autocomplete="one-time-code" />
+  <input class="code" id="code-4" type="text" maxlength="1" inputmode="numeric" autocomplete="one-time-code" />
+  <input class="code" id="code-5" type="text" maxlength="1" inputmode="numeric" autocomplete="one-time-code" />
+  <input class="code" id="code-6" type="text" maxlength="1" inputmode="numeric" autocomplete="one-time-code" />
+</div>
+
   <script>
     const inputs = document.querySelectorAll('.code');
     inputs[0].focus();
